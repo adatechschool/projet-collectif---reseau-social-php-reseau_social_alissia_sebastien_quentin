@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -32,7 +35,7 @@
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes dont
                         l'utilisatrice
-                        n° <?php echo intval($_GET['user_id']) ?>
+                        n° <?php echo intval($_SESSION['connected_id']) ?>
                         suit les messages
                     </p>
 
@@ -41,7 +44,7 @@
             <main class='contacts'>
                 <?php
                 // Etape 1: récupérer l'id de l'utilisateur
-                $userId = intval($_GET['user_id']);
+                $userId = intval($_SESSION['connected_id']);
                 // Etape 2: se connecter à la base de donnée
                 $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
                 // Etape 3: récupérer le nom de l'utilisateur
@@ -56,11 +59,17 @@
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 ?>
-                <article>
-                    <img src="user.jpg" alt="blason"/>
-                    <h3>Alexandra</h3>
-                    <p>id:654</p>                    
-                </article>
+                <?php
+                while ($userId = $lesInformations->fetch_assoc()) {
+                    
+                    ?> 
+                    <article>
+                        <img src="user.jpg" alt="blason"/>
+                        <h3><a href="wall.php?user_id=<?php echo $userId['id'] ?>"><?php echo $userId['alias'] ?></h3>
+                        <p><?php echo $userId['id'] ?></p>                    
+                    </article>
+                    <?php } ?> 
+                    
             </main>
         </div>
     </body>

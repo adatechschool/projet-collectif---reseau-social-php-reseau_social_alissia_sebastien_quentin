@@ -36,25 +36,7 @@
             <main>
                 <!-- L'article qui suit est un exemple pour la présentation et 
                   @todo: doit etre retiré -->
-                <article>
-                    <h3>
-                        <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
-                    </h3>
-                    <address>par AreTirer</address>
-                    <div>
-                        <p>Ceci est un paragraphe</p>
-                        <p>Ceci est un autre paragraphe</p>
-                        <p>... de toutes manières il faut supprimer cet 
-                            article et le remplacer par des informations en 
-                            provenance de la base de donnée (voir ci-dessous)</p>
-                    </div>                                            
-                    <footer>
-                        <small>♥1012 </small>
-                        <a href="">#lorem</a>,
-                        <a href="">#piscitur</a>,
-                    </footer>
-                </article>               
-
+                   
                 <?php
                 /*
                   // C'est ici que le travail PHP commence
@@ -66,7 +48,7 @@
                  */
 
                 // Etape 1: Ouvrir une connexion avec la base de donnée.
-                $mysqli = new mysqli("localhost", "root", "", "socialnetwork");
+                $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
                 //verification
                 if ($mysqli->connect_errno)
                 {
@@ -83,9 +65,11 @@
                 $laQuestionEnSql = "
                     SELECT posts.content,
                     posts.created,
-                    users.alias as author_name,  
+                    users.alias as author_name,
+                    users.id as user_id,
                     count(likes.id) as like_number,  
-                    GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                    GROUP_CONCAT(DISTINCT tags.label) AS taglist,
+                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
@@ -111,6 +95,7 @@
                 {
                     //la ligne ci-dessous doit etre supprimée mais regardez ce 
                     //qu'elle affiche avant pour comprendre comment sont organisées les information dans votre 
+                    
                     echo "<pre>" . print_r($post, 1) . "</pre>";
 
                     // @todo : Votre mission c'est de remplacer les AREMPLACER par les bonnes valeurs
@@ -123,13 +108,13 @@
                         <h3>
                             <time><?php echo $post['created'] ?></time>
                         </h3>
-                        <address><?php echo $post['author_name'] ?></address>
+                        <address><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
                         <div>
                             <p><?php echo $post['content'] ?></p>
                         </div>
                         <footer>
                             <small>♥ <?php echo $post['like_number'] ?> </small>
-                            <a href="">#<?php echo $post['taglist'] ?></a>,
+                            <a href="tags.php?tag_id=<?php echo $post['tag_id'] ?>">#<?php echo $post['taglist'] ?></a>,
                         </footer>
                     </article>
                     <?php
