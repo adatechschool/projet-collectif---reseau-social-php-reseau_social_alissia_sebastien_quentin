@@ -51,7 +51,7 @@ body>header #user ul{
     position: absolute;
     padding:0;
     margin:0;
-    margin-left:-5em;
+    margin: left 20em;
     background-color: #fff;
     border: 1px solid #99b;
 
