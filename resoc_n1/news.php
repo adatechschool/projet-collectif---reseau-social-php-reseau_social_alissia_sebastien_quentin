@@ -48,7 +48,7 @@
                  */
 
                 // Etape 1: Ouvrir une connexion avec la base de donnée.
-                $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+                $mysqli = new mysqli("localhost", "root", "", "socialnetwork");
                 //verification
                 if ($mysqli->connect_errno)
                 {
@@ -114,7 +114,16 @@
                         </div>
                         <footer>
                             <small>♥ <?php echo $post['like_number'] ?> </small>
-                            <a href="tags.php?tag_id=<?php echo $post['tag_id'] ?>">#<?php echo $post['taglist'] ?></a>,
+                            <?php
+                            $taglist = explode(",", $post['taglist']);
+                            $tag_ids = explode(",", $post['tag_id']);
+                            for ($i = 0; $i < count($taglist); $i++) {
+                                echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
+                                if ($i < count($taglist) - 1) {
+                                    echo ', ';
+                                }
+                            }
+                            ?>
                         </footer>
                     </article>
                     <?php
