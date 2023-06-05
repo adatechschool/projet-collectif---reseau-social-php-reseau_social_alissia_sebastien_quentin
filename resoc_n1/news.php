@@ -104,6 +104,9 @@
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
                     ?>
+
+                    <?php $nbLike = $post['like_number'] ?>
+
                     <article>
                         <h3>
                             <time><?php echo $post['created'] ?></time>
@@ -113,7 +116,7 @@
                             <p><?php echo $post['content'] ?></p>
                         </div>
                         <footer>
-                            <small>♥ <?php echo $post['like_number'] ?> </small>
+                            <small><button>♥ <?php echo $nbLike ?> </button></small>
                             <a href="tags.php?tag_id=<?php echo $post['tag_id'] ?>">#<?php echo $post['taglist'] ?></a>,
                         </footer>
                     </article>
