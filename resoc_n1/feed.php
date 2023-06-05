@@ -44,7 +44,7 @@ session_start();
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+            $mysqli = new mysqli("localhost", "root", "", "socialnetwork");
             ?>
 
             <aside>
@@ -105,18 +105,27 @@ session_start();
                     ?>
                 
                 <article>
-                    <h3>
-                        <time datetime='2020-02-01 11:12:13' ><?php echo $post['created'] ?></time>
-                    </h3>
-                    <address>par <?php echo $post['author_name'] ?></address>
-                    <div>
-                        <p><?php echo $post['content'] ?></p>
-                    </div>                                            
-                    <footer>
-                        <small>♥ <?php echo $post['like_number'] ?></small>
-                        <a href="tags.php?tag_id=<?php echo $post['tag_id'] ?>">#<?php echo $post['taglist'] ?></a>
-                    </footer>
-                </article>
+                        <h3>
+                            <time><?php echo $post['created'] ?></time>
+                        </h3>
+                        <address><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"><?php echo $post['author_name'] ?></a></address>
+                        <div>
+                            <p><?php echo $post['content'] ?></p>
+                        </div>
+                        <footer>
+                            <small>♥ <?php echo $post['like_number'] ?> </small>
+                            <?php
+                            $taglist = explode(",", $post['taglist']);
+                            $tag_ids = explode(",", $post['tag_id']);
+                            for ($i = 0; $i < count($taglist); $i++) {
+                                echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
+                                if ($i < count($taglist) - 1) {
+                                    echo ', ';
+                                }
+                            }
+                            ?>
+                        </footer>
+                    </article>
                 <?php
                 // et de pas oublier de fermer ici vote while
                 }
