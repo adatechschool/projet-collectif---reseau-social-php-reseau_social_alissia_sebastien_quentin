@@ -43,7 +43,7 @@ session_start();
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            $mysqli = new mysqli("localhost", "root", "", "socialnetwork");
+            $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
             ?>
 
             <aside>
