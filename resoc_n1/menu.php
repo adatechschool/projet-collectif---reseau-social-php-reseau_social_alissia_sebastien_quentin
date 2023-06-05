@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <header>
-        <?php if (isset( $_SESSION [ 'connected_id' ])) {?>
+        <?php if (isset($_SESSION ['connected_id'])) {?>
 
         <nav id="menu">
             <a href="news.php">Actualités</a>

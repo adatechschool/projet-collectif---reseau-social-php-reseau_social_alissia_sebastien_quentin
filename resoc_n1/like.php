@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+include 'serv.php';
 if (isset($_GET['t'], $_GET['id']) AND !empty($_GET['id']) AND !empty($_GET['t'])){
     $getid = (int) $_GET['id']
     $gett = (int) $_GET['t']
