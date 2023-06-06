@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -69,13 +71,13 @@
                             
                         } else
                         {
-                            echo "Votre connexion est un succès : " . $user['alias'] . ".";
+                            // echo "Votre connexion est un succès : " . $user['alias'] . ".";
                             // Etape 7 : Se souvenir que l'utilisateur s'est connecté pour la suite
                             // documentation: https://www.php.net/manual/fr/session.examples.basic.php
                             echo "<pre>" . print_r($_SESSION, 1) . "</pre>";
                             $_SESSION['connected_id']=$user['id'];
                             if (isset($_SESSION['connected_id'])) {
-                                header('Location: wall.php');
+                                header('Location: news.php');
                                 exit;
                             }
                         }

@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -25,7 +27,7 @@
         ?>
         <nav id="menu">
             <a href="news.php">Actualités</a>
-            <a href="wall.php">Mur</a>
+            <a href="mywall.php">Mur</a>
             <a href="feed.php">Flux</a>
             <a href="tags.php">Mots-clés</a>
         </nav>
@@ -136,7 +138,7 @@
                         <?php
                         session_start();
                         if ($_SESSION['connected_id']!== null) {
-                            ?><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"> 
+                            ?><a href="mywall.php?user_id=<?php echo $post['user_id'] ?>"> 
                             <?php } else { ?>
                             <a href="login.php">
                         <?php } ?>
