@@ -21,6 +21,8 @@
              * Etape 1: Le mur concerne un mot-clé en particulier
              */
             $tagId = intval($_GET['tag_id']);
+            echo 'tagId: $tagId<br>'
+        
             ?>
             <?php
             /**
@@ -45,16 +47,16 @@
                 ?>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
-                    <h3>Présentation</h3>
+                    <!-- <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages comportant
                         le mot-clé </br>
                         <strong><?php echo $tag['label'] ?></strong>
                         (n° <?php echo $tag['id'] ?>)
-                    </p>
+                    </p> -->
                     <h3>All Tags</h3>
                         <ul>
                         <?php foreach ($allTags as $tag) { ?>
-                            <li><a href="tags.php?tag_id=<?php echo $tag['id']; ?>"><?php echo $tag['label']; ?></a></li>
+                            <li><a href="tags.php?tag_id=<?php echo $tag['id']; ?>"># <?php echo $tag['label']; ?></a></li>
                         <?php } ?>
                         </ul>
 
@@ -78,8 +80,8 @@
                     JOIN users ON users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
                     LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    WHERE filter.tag_id = '$tagId' 
+                    LEFT JOIN likes      ON likes.post_id  = posts.id
+                    WHERE filter.tag_id = '$tagId'   
                     GROUP BY posts.id
                     ORDER BY posts.created DESC
                     ";
