@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -42,6 +45,7 @@
         }
         ?>
         </header>
+
         <div id="wrapper">
             <?php
             /**

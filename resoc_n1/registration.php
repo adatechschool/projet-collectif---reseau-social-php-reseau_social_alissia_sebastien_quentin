@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -70,8 +73,11 @@
                         {
                             // echo "Votre inscription est un succès : " . $new_alias;
                             // echo " <a href='login.php'>Connectez-vous.</a>";
+
+                            $_SESSION['connected_id']=$mysqli->insert_id;;
+
                             if (isset($_SESSION['connected_id'])) {
-                                header('Location: wall.php');
+                                header('Location: news.php');
                                 exit;
                             }
                         }
