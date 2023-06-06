@@ -25,7 +25,7 @@
         ?>
         <nav id="menu">
             <a href="news.php">Actualités</a>
-            <a href="wall.php">Mur</a>
+            <a href="mywall.php">Mon Mur</a>
             <a href="feed.php">Flux</a>
             <a href="tags.php">Mots-clés</a>
         </nav>
@@ -162,7 +162,7 @@
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                 if ($i < count($taglist) - 1) {
                                     echo ', ';
-                            
+                                    ?>
                             <form method="post">
                                 <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
                             </form>
@@ -197,7 +197,7 @@
                     </article>
                     <?php
                     // avec le <?php ci-dessus on retourne en mode php 
-                }// cette accolade ferme et termine la boucle while ouverte avant.
+                }}}// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
                 
             </main>
