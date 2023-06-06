@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -93,7 +91,8 @@ session_start();
                     SELECT posts.content, posts.created, users.alias as author_name, 
                     COUNT(likes.id) as like_number,
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist,
-                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id
+                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id,
+                    posts.user_id
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
