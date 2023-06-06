@@ -125,7 +125,7 @@
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                    ?>
+                ?>
                     <?php $nbLike = $post['like_number'] ?>
 
                     <article>
@@ -170,7 +170,6 @@
                             <?php
 
                                 if (isset($_POST["like-number"])) {
-                                    // Mettre à jour le nombre de likes dans la base de données
                                     $newLikes = $totalLikes + 1;
                                     $updateSql = "UPDATE likes SET count = $newLikes WHERE id = 1";
                                     if ($lesInformations->query($mysqli) === TRUE) {
@@ -200,7 +199,7 @@
                     // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
-
+                
             </main>
         </div>
     </body>
