@@ -92,10 +92,12 @@ session_start();
                     users.id as user_id,
                     count(likes.id) as like_number,  
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist,
-                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id
+                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id,
+                    GROUP_CONCAT(DISTINCT likes.id) AS id_like,
+                    GROUP_CONCAT(DISTINCT likes.post_id) AS id_post 
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
-                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id 
                     LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
                     LEFT JOIN likes      ON likes.post_id  = posts.id 
                     GROUP BY posts.id
@@ -125,7 +127,7 @@ session_start();
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                    ?>
+                ?>
                     <?php $nbLike = $post['like_number'] ?>
 
                     <article>
@@ -162,6 +164,33 @@ session_start();
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                 if ($i < count($taglist) - 1) {
                                     echo ', ';
+                            
+                            <form method="post">
+                                <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
+                            </form>
+                            
+                            <?php
+
+                                if (isset($_POST["like-number"])) {
+                                    $newLikes = $totalLikes + 1;
+                                    $updateSql = "UPDATE likes SET count = $newLikes WHERE id = 1";
+                                    if ($lesInformations->query($mysqli) === TRUE) {
+                                        $totalLikes = $newLikes;
+                                    } else {
+                                        echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
+                                    }
+                                }
+
+                            
+                                
+                                ?>
+                                <?php
+                                $taglist = explode(",", $post['taglist']);
+                                $tag_ids = explode(",", $post['tag_id']);
+                                for ($i = 0; $i < count($taglist); $i++) {
+                                    echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
+                                    if ($i < count($taglist) - 1) {
+                                        echo ', ';
                                 }
                             }
                             ?>
@@ -172,7 +201,7 @@ session_start();
                     // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
-
+                
             </main>
         </div>
     </body>
