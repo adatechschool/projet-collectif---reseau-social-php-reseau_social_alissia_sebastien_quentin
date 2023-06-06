@@ -37,6 +37,9 @@
                 $laQuestionEnSql = "SELECT * FROM tags WHERE id= '$tagId' ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $tag = $lesInformations->fetch_assoc();
+                $allTagsQuery = "SELECT * FROM tags";
+                $allTagsResult = $mysqli->query($allTagsQuery);
+                $allTags = $allTagsResult->fetch_all(MYSQLI_ASSOC);
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par le label et effacer la ligne ci-dessous
                 echo "<pre>" . print_r($tag, 1) . "</pre>";
                 ?>
@@ -48,6 +51,12 @@
                         <strong><?php echo $tag['label'] ?></strong>
                         (n° <?php echo $tag['id'] ?>)
                     </p>
+                    <h3>All Tags</h3>
+                        <ul>
+                        <?php foreach ($allTags as $tag) { ?>
+                            <li><a href="tags.php?tag_id=<?php echo $tag['id']; ?>"><?php echo $tag['label']; ?></a></li>
+                        <?php } ?>
+                        </ul>
 
                 </section>
             </aside>
