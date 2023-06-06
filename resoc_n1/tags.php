@@ -9,8 +9,26 @@
     <body>
         <header>
         <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-        <?php include 'menu.php'; ?>
+
+        <nav id="menu">
+            <a href="news.php">Actualités</a>
+            <a href="wall.php">Mur</a>
+            <a href="feed.php">Flux</a>
+            <a href="tags.php">Mots-clés</a>
+        </nav>
+
+        <nav id="user">
+            <a href="#">Profil</a>
+                <ul>
+                    <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
+                    <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
+                    <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
+                    <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
+                    <li><a href="logout.php">Déconnexion</a></li>
+                </ul>
+        </nav>
         </header>
+
         <div id="wrapper">
             <?php
             /**
@@ -21,6 +39,8 @@
              * Etape 1: Le mur concerne un mot-clé en particulier
              */
             $tagId = intval($_GET['tag_id']);
+            echo 'tagId: $tagId<br>'
+        
             ?>
             <?php
             /**
@@ -37,17 +57,26 @@
                 $laQuestionEnSql = "SELECT * FROM tags WHERE id= '$tagId' ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $tag = $lesInformations->fetch_assoc();
+                $allTagsQuery = "SELECT * FROM tags";
+                $allTagsResult = $mysqli->query($allTagsQuery);
+                $allTags = $allTagsResult->fetch_all(MYSQLI_ASSOC);
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par le label et effacer la ligne ci-dessous
                 echo "<pre>" . print_r($tag, 1) . "</pre>";
                 ?>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
-                    <h3>Présentation</h3>
+                    <!-- <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages comportant
                         le mot-clé </br>
                         <strong><?php echo $tag['label'] ?></strong>
                         (n° <?php echo $tag['id'] ?>)
-                    </p>
+                    </p> -->
+                    <h3>All Tags</h3>
+                        <ul>
+                        <?php foreach ($allTags as $tag) { ?>
+                            <li><a href="tags.php?tag_id=<?php echo $tag['id']; ?>"># <?php echo $tag['label']; ?></a></li>
+                        <?php } ?>
+                        </ul>
 
                 </section>
             </aside>
@@ -69,15 +98,15 @@
                     JOIN users ON users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
                     LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    WHERE filter.tag_id = '$tagId' 
+                    LEFT JOIN likes      ON likes.post_id  = posts.id
+                    WHERE filter.tag_id = '$tagId'   
                     GROUP BY posts.id
                     ORDER BY posts.created DESC
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 if ( ! $lesInformations)
                 {
-                    echo("Échec de la requete : " . $mysqli->error);
+                    echo("Échec de la requete : ". $mysqli->error);
                 }
 
                 /**

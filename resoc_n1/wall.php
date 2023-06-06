@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -12,8 +10,41 @@ session_start();
     <body>
         <header>
         <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-        <?php include 'menu.php'; ?>
+
+        <?php
+        session_start();
+        if ($_SESSION['connected_id']== null) {
+            ?>
+            <nav id="menu">
+                <a href="news.php">Actualités</a>
+                <a href="login.php">Connexion</a>
+                <a href="registration.php">Inscription</a>
+            </nav>
+            <?php
+        } else {
+            ?>    
+            <nav id="menu">
+                <a href="news.php">Actualités</a>
+                <a href="wall.php">Mur</a>
+                <a href="feed.php">Flux</a>
+                <a href="tags.php">Mots-clés</a>
+            </nav>
+    
+            <nav id="user">
+                <a href="#">Profil</a>
+                <ul>
+                    <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
+                    <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
+                    <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
+                    <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
+                    <li><a href="logout.php">Déconnexion</a></li>
+                </ul>
+            </nav>
+            <?php
+        }
+            ?>
         </header>
+        
         <div id="wrapper">
             <?php
             /**
@@ -23,7 +54,7 @@ session_start();
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
-            $userId =intval($_SESSION['connected_id']);
+            $userId = intval($_GET['user_id']);
             ?>
             <?php
             /**
@@ -60,7 +91,8 @@ session_start();
                     SELECT posts.content, posts.created, users.alias as author_name, 
                     COUNT(likes.id) as like_number,
                     GROUP_CONCAT(DISTINCT tags.label) AS taglist,
-                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id
+                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id,
+                    posts.user_id
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  

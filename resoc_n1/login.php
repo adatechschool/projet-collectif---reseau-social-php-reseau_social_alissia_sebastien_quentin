@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -12,7 +10,12 @@ session_start();
     <body>
         <header>
         <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-        <?php include 'menu.php'; ?>
+        
+        <nav id="menu">
+                <a href="news.php">Actualités</a>
+                <a href="login.php">Connexion</a>
+                <a href="registration.php">Inscription</a>
+        </nav>
         </header>
 
         <div id="wrapper" >
@@ -71,10 +74,10 @@ session_start();
                             // documentation: https://www.php.net/manual/fr/session.examples.basic.php
                             echo "<pre>" . print_r($_SESSION, 1) . "</pre>";
                             $_SESSION['connected_id']=$user['id'];
-                            // if (isset($_SESSION['connected_id'])) {
-                            //     header('Location: wall.php');
-                            //     exit;
-                            // }
+                            if (isset($_SESSION['connected_id'])) {
+                                header('Location: wall.php');
+                                exit;
+                            }
                         }
                     }
                     ?>                     
@@ -87,11 +90,11 @@ session_start();
                         </dl>
                         <input type='submit'>
                     </form>
-                    <p>
+                    <!-- <p>
                         <br/>
                         Pas de compte?
                         <a href='registration.php'>Inscrivez-vous.</a>
-                    </p>
+                    </p> -->
 
                 </article>
             </main>
