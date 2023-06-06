@@ -9,7 +9,11 @@
     <body>
         <header>
         <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-        <?php include 'menu.php'; ?>
+        <nav id="menu">
+                <a href="news.php">Actualités</a>
+                <a href="login.php">Connexion</a>
+                <a href="registration.php">Inscription</a>
+            </nav>
         </header>
 
         <div id="wrapper" >
@@ -61,11 +65,15 @@
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)
                         {
-                            echo "L'inscription a échouée : " . $mysqli->error;
+                            echo "L'inscription a échouée : ". $mysqli->error;
                         } else
                         {
-                            echo "Votre inscription est un succès : " . $new_alias;
-                            echo " <a href='login.php'>Connectez-vous.</a>";
+                            // echo "Votre inscription est un succès : " . $new_alias;
+                            // echo " <a href='login.php'>Connectez-vous.</a>";
+                            if (isset($_SESSION['connected_id'])) {
+                                header('Location: wall.php');
+                                exit;
+                            }
                         }
                     }
                     ?>                     
