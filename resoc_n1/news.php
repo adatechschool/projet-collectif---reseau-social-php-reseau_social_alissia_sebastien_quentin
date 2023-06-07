@@ -127,7 +127,7 @@ session_start();
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                ?>
+                    ?>
                     <?php $nbLike = $post['like_number'] ?>
 
                     <article>
@@ -157,18 +157,20 @@ session_start();
                             ?><small><button>♥<?php echo $nbLike ?></button></small>
                             
                             <a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a>
-                            <?php
+
                             $taglist = explode(",", $post['taglist']);
                             $tag_ids = explode(",", $post['tag_id']);
                             for ($i = 0; $i < count($taglist); $i++) {
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                 if ($i < count($taglist) - 1) {
                                     echo ', ';
-                            
+                                }
+                            }
+
                             <form method="post">
                                 <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
                             </form>
-                            
+
                             <?php
 
                                 if (isset($_POST["like-number"])) {
@@ -180,10 +182,11 @@ session_start();
                                         echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
                                     }
                                 }
+                                
 
-                            
                                 
                                 ?>
+
                                 <?php
                                 $taglist = explode(",", $post['taglist']);
                                 $tag_ids = explode(",", $post['tag_id']);
@@ -191,8 +194,9 @@ session_start();
                                     echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                     if ($i < count($taglist) - 1) {
                                         echo ', ';
+                                    }
                                 }
-                            }
+                                ?>
                             ?>
                         <?php } ?>
                         </footer>
@@ -201,7 +205,7 @@ session_start();
                     // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
-                
+
             </main>
         </div>
     </body>
