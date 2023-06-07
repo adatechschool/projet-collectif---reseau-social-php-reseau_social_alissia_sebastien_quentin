@@ -140,7 +140,7 @@ session_start();
                         <?php
                         session_start();
                         if ($_SESSION['connected_id']!== null) {
-                            ?><a href="mywall.php?user_id=<?php echo $post['user_id'] ?>"> 
+                            ?><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"> 
                             <?php } else { ?>
                             <a href="login.php">
                         <?php } ?>
