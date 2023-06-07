@@ -15,7 +15,7 @@ session_start();
         
         <nav id="menu">
             <a href="news.php">Actualités</a>
-            <a href="mywall.php">Mur</a>
+            <a href="mywall.php">Mon Mur</a>
             <a href="feed.php">Flux</a>
             <a href="tags.php">Mots-clés</a>
         </nav>
@@ -55,17 +55,20 @@ session_start();
                     while ($user = $lesInformations->fetch_assoc()) {
                         $listAuteurs[$user['id']] = $user['alias'];
                     }
+                    $userId = $_SESSION['connected_id'];
+//&& array_key_exists($userId, $listAuteurs)
 
                     $enCoursDeTraitement = isset($_POST['message']);
                     if ($enCoursDeTraitement) {
-                        if (isset($userId) && array_key_exists($userId, $listAuteurs) ) {
+
+                        if (isset($userId)) {
                             $authorId = $userId;
                             //This will ensure that any special characters in the message are properly escaped before being inserted into the SQL query
                             $postContent = mysqli_real_escape_string($mysqli, $_POST['message']);
 
 
                             // Extract the hashtags from the post content
-                            preg_match_all('/#(\w+)/', $postContent, $matches);
+                            preg_match_all('/#([\p{L}\p{N}_-]+)/u', $postContent, $matches);
                             $hashtags = $matches[1];
 
                             $lInstructionSql = "INSERT INTO posts "
@@ -77,8 +80,8 @@ session_start();
                             ;
 
 
-                            $ok = $mysqli->query($lInstructionSql);
-                            if (!$ok) {
+                            $messageAjoute = $mysqli->query($lInstructionSql);
+                            if (!$messageAjoute) {
                                 echo "Impossible d'ajouter le message: " . $mysqli->error;
                             } else {
                                 // Get the post ID of the inserted post
