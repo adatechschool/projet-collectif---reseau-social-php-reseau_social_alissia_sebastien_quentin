@@ -162,7 +162,7 @@
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                 if ($i < count($taglist) - 1) {
                                     echo ', ';
-                            
+                            ?>
                             <form method="post">
                                 <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
                             </form>
@@ -171,7 +171,6 @@
 
                                 if (isset($_POST["like-number"])) {
                                     $newLikes = $totalLikes + 1;
-                                    $updateSql = "UPDATE likes SET count = $newLikes WHERE id = 1";
                                     if ($lesInformations->query($mysqli) === TRUE) {
                                         $totalLikes = $newLikes;
                                     } else {
@@ -195,9 +194,8 @@
                         <?php } ?>
                         </footer>
                     </article>
-                    <?php
-                    // avec le <?php ci-dessus on retourne en mode php 
-                }// cette accolade ferme et termine la boucle while ouverte avant.
+                <?php   // avec le <?php ci-dessus on retourne en mode php 
+                }}}// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
                 
             </main>
