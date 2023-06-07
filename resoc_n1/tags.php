@@ -13,6 +13,18 @@ session_start();
         <header>
         <img src="resoc.jpg" alt="Logo de notre réseau social"/>
 
+        <?php
+        session_start();
+        if ($_SESSION['connected_id']== null) {
+        ?>
+        <nav id="menu">
+            <a href="news.php">Actualités</a>
+            <a href="login.php">Connexion</a>
+            <a href="registration.php">Inscription</a>
+        </nav>
+        <?php
+        } else {
+        ?>
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="mywall.php">Mon Mur</a>
@@ -22,14 +34,15 @@ session_start();
 
         <nav id="user">
             <a href="#">Profil</a>
-                <ul>
-                    <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
-                    <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
-                    <li><a href="logout.php">Déconnexion</a></li>
-                </ul>
+            <ul>
+                <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
+                <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
+                <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
+                <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
+                <li><a href="logout.php">Déconnexion</a></li>
+            </ul>
         </nav>
+        <?php } ?>
         </header>
 
         <div id="wrapper">

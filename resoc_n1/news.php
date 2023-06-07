@@ -150,15 +150,14 @@ session_start();
                             <br/>
                             <p><?php echo $post['content'] ?></p>
                         </div>
+
                         <footer>
                         <?php
                         session_start();
                         if ($_SESSION['connected_id']!== null) {
-                            ?><small><button>♥<?php echo $nbLike ?></button></small>
-                            
-                            <a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a>
+                            ?>
 
-                            $taglist = explode(",", $post['taglist']);
+                            <!-- $taglist = explode(",", $post['taglist']);
                             $tag_ids = explode(",", $post['tag_id']);
                             for ($i = 0; $i < count($taglist); $i++) {
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
@@ -168,11 +167,12 @@ session_start();
                             }
 
                             <form method="post">
+                                <!-- <small><button><a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a></button></small> -->
+                                <!-- ♥<?php echo $nbLike ?> -->
                                 <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
                             </form>
 
                             <?php
-
                                 if (isset($_POST["like-number"])) {
                                     $newLikes = $totalLikes + 1;
                                     $updateSql = "UPDATE likes SET count = $newLikes WHERE id = 1";
@@ -182,27 +182,23 @@ session_start();
                                         echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
                                     }
                                 }
-                                
-
-                                
-                                ?>
-
-                                <?php
-                                $taglist = explode(",", $post['taglist']);
-                                $tag_ids = explode(",", $post['tag_id']);
-                                for ($i = 0; $i < count($taglist); $i++) {
-                                    echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
-                                    if ($i < count($taglist) - 1) {
-                                        echo ', ';
-                                    }
-                                }
-                                ?>
                             ?>
                         <?php } ?>
+
+                        <?php
+                        $taglist = explode(",", $post['taglist']);
+                        $tag_ids = explode(",", $post['tag_id']);
+                        for ($i = 0; $i < count($taglist); $i++) {
+                            echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
+                            if ($i < count($taglist) - 1) {
+                                echo ', ';
+                            }
+                        }
+                        ?>
                         </footer>
                     </article>
                     <?php
-                    // avec le <?php ci-dessus on retourne en mode php 
+                 // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
 
