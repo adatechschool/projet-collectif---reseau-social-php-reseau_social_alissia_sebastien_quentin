@@ -14,7 +14,7 @@ session_start();
         <img src="resoc.jpg" alt="Logo de notre réseau social"/>
 
         <?php
-        session_start();
+        
         if ($_SESSION['connected_id']== null) {
         ?>
         <nav id="menu">
@@ -138,7 +138,7 @@ session_start();
                         <address>
 
                         <?php
-                        session_start();
+                    
                         if ($_SESSION['connected_id']!== null) {
                             ?><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"> 
                             <?php } else { ?>
