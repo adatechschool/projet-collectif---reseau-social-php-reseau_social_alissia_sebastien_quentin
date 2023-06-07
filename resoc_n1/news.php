@@ -164,7 +164,7 @@ session_start();
                                 if ($i < count($taglist) - 1) {
                                     echo ', ';
                                 }
-                            } -->
+                            }
 
                             <form method="post">
                                 <!-- <small><button><a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a></button></small> -->
@@ -182,17 +182,19 @@ session_start();
                                         echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
                                     }
                                 }
-
-                                $taglist = explode(",", $post['taglist']);
-                                $tag_ids = explode(",", $post['tag_id']);
-                                for ($i = 0; $i < count($taglist); $i++) {
-                                    echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
-                                    if ($i < count($taglist) - 1) {
-                                        echo ', ';
-                                    }
-                                }
                             ?>
                         <?php } ?>
+
+                        <?php
+                        $taglist = explode(",", $post['taglist']);
+                        $tag_ids = explode(",", $post['tag_id']);
+                        for ($i = 0; $i < count($taglist); $i++) {
+                            echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
+                            if ($i < count($taglist) - 1) {
+                                echo ', ';
+                            }
+                        }
+                        ?>
                         </footer>
                     </article>
                     <?php
