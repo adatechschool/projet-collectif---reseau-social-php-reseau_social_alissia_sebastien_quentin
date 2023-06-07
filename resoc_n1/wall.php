@@ -80,6 +80,33 @@
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
                         (n° <?php echo $user['id'] ?>)
                     </p>
+                    <?php
+                   $userId = intval($_GET['user_id']);
+                    if ($_SESSION['connected_id'] != null && $_SESSION['connected_id'] != $userId) {
+                        $followerId = $_SESSION['connected_id'];
+                        $laQuestionEnSql = "SELECT * FROM followers WHERE following_user_id='$followerId' AND followed_user_id='$userId'";
+                        $lesInformations = $mysqli->query($laQuestionEnSql);
+                        if ($lesInformations->num_rows == 0) {
+                            ?>
+                            <form method="post" action="follow.php">
+                                <input type="hidden" name="following_user_id" value="<?php echo $followerId ?>"/>
+                                <input type="hidden" name="followed_user_id" value="<?php echo $userId ?>"/>
+                                <input type="submit" value="Suivre"/>
+                            </form>
+                            <?php
+                        } else {
+                            $followerRow = $lesInformations->fetch_assoc();
+                            $followId = $followerRow['id'];
+                            ?>
+                            <form method="post" action="unfollow.php?user_id=<?php echo $post['user_id'] ?>">
+                                <input type="hidden" name="follow_id" value="<?php echo $followId ?>"/>
+                                <input type="submit" value="Ne plus suivre"/>
+                            </form>
+                            <?php
+                        }
+                    }
+                    
+                    ?>
                 </section>
             </aside>
             <main>
