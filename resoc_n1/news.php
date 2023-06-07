@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -25,7 +27,7 @@
         ?>
         <nav id="menu">
             <a href="news.php">Actualités</a>
-            <a href="wall.php">Mur</a>
+            <a href="mywall.php">Mon Mur</a>
             <a href="feed.php">Flux</a>
             <a href="tags.php">Mots-clés</a>
         </nav>
@@ -125,7 +127,7 @@
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                ?>
+                    ?>
                     <?php $nbLike = $post['like_number'] ?>
 
                     <article>
@@ -138,7 +140,7 @@
                         <?php
                         session_start();
                         if ($_SESSION['connected_id']!== null) {
-                            ?><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"> 
+                            ?><a href="mywall.php?user_id=<?php echo $post['user_id'] ?>"> 
                             <?php } else { ?>
                             <a href="login.php">
                         <?php } ?>
@@ -155,18 +157,20 @@
                             ?><small><button>♥<?php echo $nbLike ?></button></small>
                             
                             <a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a>
-                            <?php
+
                             $taglist = explode(",", $post['taglist']);
                             $tag_ids = explode(",", $post['tag_id']);
                             for ($i = 0; $i < count($taglist); $i++) {
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                 if ($i < count($taglist) - 1) {
                                     echo ', ';
-                            ?>
+                                }
+                            }
+
                             <form method="post">
                                 <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
                             </form>
-                            
+
                             <?php
 
                                 if (isset($_POST["like-number"])) {
@@ -177,10 +181,11 @@
                                         echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
                                     }
                                 }
+                                
 
-                            
                                 
                                 ?>
+
                                 <?php
                                 $taglist = explode(",", $post['taglist']);
                                 $tag_ids = explode(",", $post['tag_id']);
@@ -188,8 +193,9 @@
                                     echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
                                     if ($i < count($taglist) - 1) {
                                         echo ', ';
+                                    }
                                 }
-                            }
+                                ?>
                             ?>
                         <?php } ?>
                         </footer>
@@ -197,7 +203,7 @@
                 <?php   // avec le <?php ci-dessus on retourne en mode php 
                 }}}// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
-                
+
             </main>
         </div>
     </body>

@@ -1,4 +1,6 @@
-
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="fr">
     <head>
@@ -13,7 +15,7 @@
 
         <nav id="menu">
             <a href="news.php">Actualités</a>
-            <a href="wall.php">Mur</a>
+            <a href="mywall.php">Mon Mur</a>
             <a href="feed.php">Flux</a>
             <a href="tags.php">Mots-clés</a>
         </nav>
