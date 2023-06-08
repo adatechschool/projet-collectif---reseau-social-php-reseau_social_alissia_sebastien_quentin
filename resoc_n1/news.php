@@ -137,7 +137,7 @@ session_start();
 
                         <footer>
                         <?php
-                        session_start();
+                        
                         if ($_SESSION['connected_id']!== null) {
                             ?>
 
