@@ -66,7 +66,6 @@ session_start();
                     echo("Échec de la requete : " . $mysqli->error);
                 }
                 $user = $lesInformations->fetch_assoc();
-                echo "<pre>" . print_r($_SESSION, 1) . "</pre>";
                 
                 /**
                  * Etape 4: à vous de jouer
