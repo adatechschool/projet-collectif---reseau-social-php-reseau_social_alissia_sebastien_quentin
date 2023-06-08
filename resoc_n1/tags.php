@@ -57,7 +57,6 @@ session_start();
                 $allTagsResult = $mysqli->query($allTagsQuery);
                 $allTags = $allTagsResult->fetch_all(MYSQLI_ASSOC);
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par le label et effacer la ligne ci-dessous
-                echo "<pre>" . print_r($tag, 1) . "</pre>";
                 ?>
                 <img src="user.png" alt="Portrait de l'utilisatrice"/>
                 <section>
