@@ -11,7 +11,7 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="resoc.png" alt="Logo de notre réseau social"/>
         <?php
         include "header.php";
         ?>
@@ -19,7 +19,7 @@ session_start();
         
         <div id="wrapper">          
             <aside>
-                <img src = "user.jpg" alt = "Portrait de l'utilisatrice"/>
+                <img src = "user.png" alt = "Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes qui

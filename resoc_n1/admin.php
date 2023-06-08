@@ -11,7 +11,7 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="resoc.png" alt="Logo de notre réseau social"/>
 
         <?php
         include "header.php";

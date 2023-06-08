@@ -5,13 +5,13 @@ session_start();
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>ReSoC - Post d'usurpateur</title> 
+        <title>ReSoC - Post</title> 
         <meta name="author" content="Julien Falconnet">
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="resoc.png" alt="Logo de notre réseau social"/>
         
         <?php
         include "header.php";

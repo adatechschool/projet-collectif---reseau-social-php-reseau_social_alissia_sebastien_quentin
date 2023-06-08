@@ -11,7 +11,7 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
+        <img src="resoc.png" alt="Logo de notre réseau social"/>
 
         <?php
         include "header.php";
@@ -20,7 +20,7 @@ session_start();
         
         <div id="wrapper">
             <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="user.png" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes dont
@@ -54,7 +54,7 @@ session_start();
                     
                     ?> 
                     <article>
-                        <img src="user.jpg" alt="blason"/>
+                        <img src="user.png" alt="blason"/>
                         <h3><a href="wall.php?user_id=<?php echo $userId['id'] ?>"><?php echo $userId['alias'] ?></h3>
                         <p><?php echo $userId['id'] ?></p>                    
                     </article>
