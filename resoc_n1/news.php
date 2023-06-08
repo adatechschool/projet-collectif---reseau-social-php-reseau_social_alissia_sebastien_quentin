@@ -11,12 +11,12 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-
-        <?php
+            
+            <?php
         session_start();
         if ($_SESSION['connected_id']== null) {
-        ?>
+            ?>
+        <a id="menuComplet">
         <nav id="menu">
             <a href="news.php">Actualités</a>
             <a href="login.php">Connexion</a>
@@ -42,6 +42,7 @@ session_start();
                 <li><a href="logout.php">Déconnexion</a></li>
             </ul>
         </nav>
+        </a>
         <?php
         }
         ?>
@@ -154,10 +155,11 @@ session_start();
                         <?php
                         session_start();
                         if ($_SESSION['connected_id']!== null) {
-                            ?><small><button>♥<?php echo $nbLike ?></button></small>
+                            ?><small><button>♥ <?php echo $nbLike ?></button></small>
                             
                             <a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a>
 
+                            <?php
                             $taglist = explode(",", $post['taglist']);
                             $tag_ids = explode(",", $post['tag_id']);
                             for ($i = 0; $i < count($taglist); $i++) {
@@ -166,25 +168,25 @@ session_start();
                                     echo ', ';
                                 }
                             }
+                            ?>
 
                             <form method="post">
-                                <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
+                                <small><input type="submit" name="btnLike" value="♥ <?php echo $post["like_number"] ?>"/></small>
                             </form>
 
                             <?php
 
-                                if (isset($_POST["like-number"])) {
-                                    $newLikes = $totalLikes + 1;
-                                    if ($lesInformations->query($mysqli) === TRUE) {
-                                        $totalLikes = $newLikes;
-                                    } else {
-                                        echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
-                                    }
-                                }
+                            $$sqlCheckIfPostIsLikedResult = "SELECT * FROM likes";
+
+                            if ($sqlCheckIfPostIsLikedResult->num_rows === 0) {
+
+                            }
                                 
 
                                 
-                                ?>
+
+                                
+                            ?>
 
                                 <?php
                                 $taglist = explode(",", $post['taglist']);
@@ -196,12 +198,12 @@ session_start();
                                     }
                                 }
                                 ?>
-                            ?>
+        
                         <?php } ?>
                         </footer>
                     </article>
                 <?php   // avec le <?php ci-dessus on retourne en mode php 
-                }}}// cette accolade ferme et termine la boucle while ouverte avant.
+                }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
 
             </main>
