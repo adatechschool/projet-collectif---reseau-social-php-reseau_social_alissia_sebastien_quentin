@@ -11,16 +11,16 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.png" alt="Logo de notre réseau social"/>
-
-        <?php
+            
+            <?php
         
         if (!isset($_SESSION['connected_id'])) {
         ?>
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="login.php">Connexion</a>
-            <a href="registration.php">Inscription</a>
+        <a id="menuComplet">
+            <nav id="menu">
+                <a href="news.php">Actualités</a>
+                <a href="login.php">Connexion</a>
+                <a href="registration.php">Inscription</a>
         </nav>
         <?php
         } else {

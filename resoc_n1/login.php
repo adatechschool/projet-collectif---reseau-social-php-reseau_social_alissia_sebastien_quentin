@@ -11,7 +11,6 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.png" alt="Logo de notre réseau social"/>
         
         <nav id="menu">
                 <a href="news.php">Actualités</a>

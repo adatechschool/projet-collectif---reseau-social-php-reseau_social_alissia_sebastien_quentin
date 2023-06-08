@@ -9,7 +9,6 @@
     </head>
     <body>
         <header>
-        <img src="resoc.png" alt="Logo de notre réseau social"/>
 
         <?php
         session_start();

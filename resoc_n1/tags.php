@@ -11,7 +11,6 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.png" alt="Logo de notre réseau social"/>
 
         <?php
         
@@ -66,7 +65,7 @@ session_start();
                     <h3>All Tags</h3>
                         <ul>
                         <?php foreach ($allTags as $tag) { ?>
-                            <li><a href="tags.php?tag_id=<?php echo $tag['id']; ?>"># <?php echo $tag['label']; ?></a></li>
+                            <li><a class="tags" href="tags.php?tag_id=<?php echo $tag['id']; ?>">#<?php echo $tag['label']; ?></a></li>
                         <?php } ?>
                         </ul>
 
