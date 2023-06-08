@@ -9,7 +9,6 @@
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
 
         <?php
         session_start();
@@ -22,25 +21,9 @@
             </nav>
             <?php
         } else {
-            ?>    
-            <nav id="menu">
-                <a href="news.php">Actualités</a>
-                <a href="mywall.php">Mon Mur</a>
-                <a href="feed.php">Flux</a>
-                <a href="tags.php">Mots-clés</a>
-            </nav>
-    
-            <nav id="user">
-                <a href="#">Profil</a>
-                <ul>
-                    <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
-                    <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
-                    <li><a href="logout.php">Déconnexion</a></li>
-                </ul>
-            </nav>
-            <?php
+      
+        include "header.php";
+  
         }
             ?>
         </header>
@@ -72,14 +55,40 @@
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $user = $lesInformations->fetch_assoc();
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
-                echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="user.png" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
                         (n° <?php echo $user['id'] ?>)
                     </p>
+                    <?php
+                   $userId = intval($_GET['user_id']);
+                    if ($_SESSION['connected_id'] != null && $_SESSION['connected_id'] != $userId) {
+                        $followerId = $_SESSION['connected_id'];
+                        $laQuestionEnSql = "SELECT * FROM followers WHERE following_user_id='$followerId' AND followed_user_id='$userId'";
+                        $lesInformations = $mysqli->query($laQuestionEnSql);
+                        if ($lesInformations->num_rows == 0) {
+                            ?>
+                            <form method="post" action="follow.php">
+                                <input type="hidden" name="following_user_id" value="<?php echo $followerId ?>"/>
+                                <input type="hidden" name="followed_user_id" value="<?php echo $userId ?>"/>
+                                <input type="submit" value="Suivre"/>
+                            </form>
+                            <?php
+                        } else {
+                            $followerRow = $lesInformations->fetch_assoc();
+                            $followId = $followerRow['id'];
+                            ?>
+                            <form method="post" action="unfollow.php?user_id=<?php echo $post['user_id'] ?>">
+                                <input type="hidden" name="follow_id" value="<?php echo $followId ?>"/>
+                                <input type="submit" value="Ne plus suivre"/>
+                            </form>
+                            <?php
+                        }
+                    }
+                    
+                    ?>
                 </section>
             </aside>
             <main>

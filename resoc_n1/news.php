@@ -13,44 +13,27 @@ session_start();
         <header>
             
             <?php
-        session_start();
+        
         if ($_SESSION['connected_id']== null) {
             ?>
         <a id="menuComplet">
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="login.php">Connexion</a>
-            <a href="registration.php">Inscription</a>
+            <nav id="menu">
+                <a href="news.php">Actualités</a>
+                <a href="login.php">Connexion</a>
+                <a href="registration.php">Inscription</a>
         </nav>
         <?php
         } else {
-        ?>
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="mywall.php">Mon Mur</a>
-            <a href="feed.php">Flux</a>
-            <a href="tags.php">Mots-clés</a>
-        </nav>
+ 
+            include "header.php";
 
-        <nav id="user">
-            <a href="#">Profil</a>
-            <ul>
-                <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
-                <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
-                <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
-                <li><a href="logout.php">Déconnexion</a></li>
-            </ul>
-        </nav>
-        </a>
-        <?php
         }
         ?>
         </header>
 
         <div id="wrapper">
             <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="user.png" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages de
@@ -139,9 +122,9 @@ session_start();
                         <address>
 
                         <?php
-                        session_start();
+                    
                         if ($_SESSION['connected_id']!== null) {
-                            ?><a href="mywall.php?user_id=<?php echo $post['user_id'] ?>"> 
+                            ?><a href="wall.php?user_id=<?php echo $post['user_id'] ?>"> 
                             <?php } else { ?>
                             <a href="login.php">
                         <?php } ?>
@@ -151,16 +134,14 @@ session_start();
                             <br/>
                             <p><?php echo $post['content'] ?></p>
                         </div>
+
                         <footer>
                         <?php
-                        session_start();
+                        
                         if ($_SESSION['connected_id']!== null) {
-                            ?><small><button>♥ <?php echo $nbLike ?></button></small>
-                            
-                            <a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a>
+                            ?>
 
-                            <?php
-                            $taglist = explode(",", $post['taglist']);
+                            <!-- $taglist = explode(",", $post['taglist']);
                             $tag_ids = explode(",", $post['tag_id']);
                             for ($i = 0; $i < count($taglist); $i++) {
                                 echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
@@ -171,38 +152,38 @@ session_start();
                             ?>
 
                             <form method="post">
-                                <small><input type="submit" name="btnLike" value="♥ <?php echo $post["like_number"] ?>"/></small>
+                                <!-- <small><button><a href="php/like.php?t=like&id=<?= $id ?>">♥ <?php echo $nbLike ?> </a></button></small> -->
+                                <!-- ♥<?php echo $nbLike ?> -->
+                                <small><input type="submit" name="btnLike" value="♥ <?php echo $post['like_number'] ?>"/></small>
                             </form>
 
                             <?php
-
-                            $$sqlCheckIfPostIsLikedResult = "SELECT * FROM likes";
-
-                            if ($sqlCheckIfPostIsLikedResult->num_rows === 0) {
-
-                            }
-                                
-
-                                
-
-                                
-                            ?>
-
-                                <?php
-                                $taglist = explode(",", $post['taglist']);
-                                $tag_ids = explode(",", $post['tag_id']);
-                                for ($i = 0; $i < count($taglist); $i++) {
-                                    echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
-                                    if ($i < count($taglist) - 1) {
-                                        echo ', ';
+                                if (isset($_POST["like-number"])) {
+                                    $newLikes = $totalLikes + 1;
+                                    $updateSql = "UPDATE likes SET count = $newLikes WHERE id = 1";
+                                    if ($lesInformations->query($mysqli) === TRUE) {
+                                        $totalLikes = $newLikes;
+                                    } else {
+                                        echo "Erreur lors de la mise à jour du nombre de likes : " . $mysqli->error;
                                     }
                                 }
-                                ?>
-        
+                            ?>
                         <?php } ?>
+
+                        <?php
+                        $taglist = explode(",", $post['taglist']);
+                        $tag_ids = explode(",", $post['tag_id']);
+                        for ($i = 0; $i < count($taglist); $i++) {
+                            echo '<a href="tags.php?tag_id=' . $tag_ids[$i] . '">#' . $taglist[$i] . '</a>';
+                            if ($i < count($taglist) - 1) {
+                                echo ', ';
+                            }
+                        }
+                        ?>
                         </footer>
                     </article>
-                <?php   // avec le <?php ci-dessus on retourne en mode php 
+                    <?php
+                 // avec le <?php ci-dessus on retourne en mode php 
                 }// cette accolade ferme et termine la boucle while ouverte avant.
                 ?>
 

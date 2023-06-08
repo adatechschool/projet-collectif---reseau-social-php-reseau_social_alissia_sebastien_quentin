@@ -11,30 +11,15 @@ session_start();
     </head>
     <body>
         <header>
-        <img src="resoc.jpg" alt="Logo de notre réseau social"/>
 
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="mywall.php">Mon Mur</a>
-            <a href="feed.php">Flux</a>
-            <a href="tags.php">Mots-clés</a>
-        </nav>
-
-        <nav id="user">
-            <a href="#">Profil</a>
-                <ul>
-                    <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Mes abonnements</a></li>
-                    <li><a href="usurpedpost.php?user_id=<?php echo $_SESSION['connected_id'] ?>">Posts</a></li>
-                    <li><a href="logout.php">Déconnexion</a></li>
-                </ul>
-        </nav>
+        <?php
+        include "header.php";
+        ?>
         </header>
         
         <div id="wrapper">
             <aside>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="user.png" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes dont
@@ -68,7 +53,7 @@ session_start();
                     
                     ?> 
                     <article>
-                        <img src="user.jpg" alt="blason"/>
+                        <img src="user.png" alt="blason"/>
                         <h3><a href="wall.php?user_id=<?php echo $userId['id'] ?>"><?php echo $userId['alias'] ?></h3>
                         <p><?php echo $userId['id'] ?></p>                    
                     </article>
