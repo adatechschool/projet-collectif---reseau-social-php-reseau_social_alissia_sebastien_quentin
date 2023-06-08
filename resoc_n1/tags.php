@@ -58,16 +58,11 @@ session_start();
                 $allTagsResult = $mysqli->query($allTagsQuery);
                 $allTags = $allTagsResult->fetch_all(MYSQLI_ASSOC);
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par le label et effacer la ligne ci-dessous
-                echo "<pre>" . print_r($tag, 1) . "</pre>";
+            
                 ?>
                 <img src="user.png" alt="Portrait de l'utilisatrice"/>
                 <section>
-                    <!-- <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez les derniers messages comportant
-                        le mot-clé </br>
-                        <strong><?php echo $tag['label'] ?></strong>
-                        (n° <?php echo $tag['id'] ?>)
-                    </p> -->
+                    
                     <h3>All Tags</h3>
                         <ul>
                         <?php foreach ($allTags as $tag) { ?>
@@ -79,27 +74,45 @@ session_start();
             </aside>
             <main>
                 <?php
-                /**
-                 * Etape 3: récupérer tous les messages avec un mot clé donné
-                 */
-                $laQuestionEnSql = "
-                    SELECT posts.content,
-                    posts.created,
-                    users.alias as author_name,  
-                    count(likes.id) as like_number,  
-                    GROUP_CONCAT(DISTINCT tags.label) AS taglist,
-                    GROUP_CONCAT(DISTINCT tags.id) AS tag_id, 
-                    GROUP_CONCAT(DISTINCT users.id) AS user_id
-                    FROM posts_tags as filter 
-                    JOIN posts ON posts.id=filter.post_id
-                    JOIN users ON users.id=posts.user_id
-                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
-                    LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id
-                    WHERE filter.tag_id = '$tagId'   
-                    GROUP BY posts.id
-                    ORDER BY posts.created DESC
-                    ";
+                if (isset($_GET['tag_id'])) {
+                    $tagId = intval($_GET['tag_id']);
+                    $laQuestionEnSql = "
+                        SELECT posts.content,
+                        posts.created,
+                        users.alias as author_name,  
+                        count(likes.id) as like_number,  
+                        GROUP_CONCAT(DISTINCT tags.label) AS taglist,
+                        GROUP_CONCAT(DISTINCT tags.id) AS tag_id, 
+                        GROUP_CONCAT(DISTINCT users.id) AS user_id
+                        FROM posts_tags as filter 
+                        JOIN posts ON posts.id=filter.post_id
+                        JOIN users ON users.id=posts.user_id
+                        LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                        LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
+                        LEFT JOIN likes      ON likes.post_id  = posts.id
+                        WHERE filter.tag_id = '$tagId'   
+                        GROUP BY posts.id
+                        ORDER BY posts.created DESC
+                        ";
+                } else {
+                    $laQuestionEnSql = "
+                        SELECT posts.content,
+                        posts.created,
+                        users.alias as author_name,  
+                        count(likes.id) as like_number,  
+                        GROUP_CONCAT(DISTINCT tags.label) AS taglist,
+                        GROUP_CONCAT(DISTINCT tags.id) AS tag_id, 
+                        GROUP_CONCAT(DISTINCT users.id) AS user_id
+                        FROM posts 
+                        JOIN users ON users.id=posts.user_id
+                        LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                        LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
+                        LEFT JOIN likes      ON likes.post_id  = posts.id
+                        GROUP BY posts.id
+                        ORDER BY posts.created DESC
+                        LIMIT 10
+                        ";
+                }
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 if ( ! $lesInformations)
                 {
